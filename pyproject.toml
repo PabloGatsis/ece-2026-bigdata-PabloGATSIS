@@ -7,10 +7,13 @@ authors = [
     { name = "p-gatsis-ece", email = "pablo.gatsis@edu.ece.fr" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "faker>=40.40.0",
+]
 
 [project.scripts]
-ece-2026-bigdata-pablogatsis = "ece_2026_bigdata_pablogatsis:main"
+dataset-users = "ece_2026_bigdata_pablogatsis.dataset_users:main"
+dataset-orders = "ece_2026_bigdata_pablogatsis.dataset_orders:main"
 
 [build-system]
 requires = ["uv_build>=0.12.10,<0.13.0"]
