@@ -2,7 +2,7 @@
 
 Bucket `user-p-gatsis-ece`, endpoint `https://s3.seaweedfs.adm.adaltas.cloud` (SeaweedFS).
 
-| Step | Evidence |
+| Step |  |
 | --- | --- |
 | Upload (PUT) | `upload: ./users.csv to s3://user-p-gatsis-ece/bronze/users.csv` (7351 B) |
 | List | `ls --recursive` returned `bronze/users.csv`, `lab-1/deployment.yaml`, `lab-1/service.yaml` |
@@ -33,7 +33,7 @@ upload: ../data/orders.csv to s3://user-p-gatsis-ece/bronze/orders.csv
 2026-10-02 10:04:38       7351 bronze/users.csv
 ```
 
-**Change vs the lab manifest:** `limits.cpu: 500m` was added. The namespace ResourceQuota
+ `limits.cpu: 500m` was added. The namespace ResourceQuota
 (`onyxia-quota`) requires requests and limits for both cpu and memory; without it no pod is
 ever created and the Job sits at `0/1` with `must specify limits.cpu for: upload`.
 
