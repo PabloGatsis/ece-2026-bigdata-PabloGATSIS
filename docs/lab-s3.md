@@ -43,12 +43,12 @@ ever created and the Job sits at `0/1` with `must specify limits.cpu for: upload
 `get configmaps` is commonly granted, `get secrets` is restricted. ConfigMaps show in plain text
 in `kubectl get -o yaml` and `describe`.
 
-**Temporary credentials
+**Temporary credentials**
 The Job fails. The key starts with `ASIA`
 (STS session credentials) and the Secret stores a snapshot, so once the session expires every S3
 call returns `ExpiredToken`.
 
-**Turning it into a daily ingestion 
+**Turning it into a daily ingestion**
 Wrap the same pod template in a `CronJob`
 (`schedule: "0 2 * * *"`, `concurrencyPolicy: Forbid`). The schedule is the easy part; it also needs
 workload identity instead of a snapshot, data read from the source system rather than a 1 MiB
