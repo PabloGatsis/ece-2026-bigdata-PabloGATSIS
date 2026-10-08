@@ -41,17 +41,16 @@ ever created and the Job sits at `0/1` with `must specify limits.cpu for: upload
 
 **Why a Secret and not a ConfigMap?** Both inject the same way, but RBAC is per resource type:
 `get configmaps` is commonly granted, `get secrets` is restricted. ConfigMaps show in plain text
-in `kubectl get -o yaml` and `describe`; Secrets are redacted and can be encrypted at rest in etcd.
-A Secret is not encrypted by default — the gain is narrower permissions and redaction.
+in `kubectl get -o yaml` and `describe`.
 
-**Temporary credentials — what happens tomorrow?** The Job fails. The key starts with `ASIA`
+**Temporary credentials
+The Job fails. The key starts with `ASIA`
 (STS session credentials) and the Secret stores a snapshot, so once the session expires every S3
-call returns `ExpiredToken`. Production uses workload identity (IRSA/OIDC) so the pod fetches and
-refreshes its own short-lived token, or a secrets manager (Vault, External Secrets) that rotates it.
+call returns `ExpiredToken`.
 
-**Turning it into a daily ingestion.** Wrap the same pod template in a `CronJob`
+**Turning it into a daily ingestion 
+Wrap the same pod template in a `CronJob`
 (`schedule: "0 2 * * *"`, `concurrencyPolicy: Forbid`). The schedule is the easy part; it also needs
 workload identity instead of a snapshot, data read from the source system rather than a 1 MiB
 ConfigMap, date-partitioned keys (`bronze/users/dt=YYYY-MM-DD/`) so history is not overwritten and
-re-runs are idempotent, and alerting on failure. Once tasks have ordering, it belongs in an
-orchestrator rather than a CronJob.
+re-runs are idempotent, and alerting on failure.
