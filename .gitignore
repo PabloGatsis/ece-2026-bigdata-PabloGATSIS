@@ -8,3 +8,5 @@ dbt_packages/
 logs/
 *.duckdb
 warehouse/**/data/
+polaris/deployment/charts/
+polaris/deployment/Chart.lock
